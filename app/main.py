@@ -14,6 +14,8 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 logger = logging.getLogger(__name__)
 
 API_KEY = config('API_KEY')
+
+# List berita yang ada 
 RSS_FEED_URLS = ['https://www.suara.com/rss/news',
                  'https://www.vice.com/id/rss?locale=id_id', 
                  'https://www.cnnindonesia.com/nasional/rss', 
@@ -24,10 +26,27 @@ RSS_FEED_URLS = ['https://www.suara.com/rss/news',
                  'https://www.viva.co.id/get/all',
                  'https://www.sindonews.com/feed',
                  'https://wartakota.tribunnews.com/rss',
-                 'https://www.jpnn.com/index.php?mib=rss']
+                 'https://www.jpnn.com/index.php?mib=rss',
+                 'https://www.beritasatu.com/sitemap_news.xml',
+                 'https://www.inews.id/feed/news',
+                 'https://www.harapanrakyat.com/feed/',
+                 'https://www.indopos.co.id/feed/',
+                 'https://www.tribunnews.com/rss',
+                 'https://beritajatim.com/feed/',
+                 'https://www.republika.co.id/rss/nasional/politik',
+                 'https://www.republika.co.id/rss/nasional/umum',
+                 'https://www.kaskus.co.id/rss/forum/10',
+                 'https://nasional.sindonews.com/rss',
+                 'https://www.voaindonesia.com/api/zmgo_e$miy',
+                 'https://sindikasi.okezone.com/index.php/rss/0/RSS2.0',
+                 'https://news.google.com/rss/search?gl=US&pz=1&cf=all&hl=en-US&q=kompas.com&ceid=US:en',
+                 'https://news.google.com/rss/search?hl=id&gl=ID&q=kompas+hari+ini&ceid=ID:id',
+                 'https://news.google.com/rss/search?hl=en-US&gl=US&q=koran+tempo&ceid=US:en']
+
 CHECK_INTERVAL = int(config('TIME_CHECKS'))
 
 bot = telegram.Bot(token=API_KEY)
+# Tambah Keywords filter
 filter = ["ganjar", "anies", "prabowo"]
 
 def fetch_latest_news():
