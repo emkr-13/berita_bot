@@ -78,8 +78,8 @@ def send_news_updates(context: CallbackContext):
                         insert_news_data(title, link)  # Menambahkan tanggal publikasi ke dalam database
                     except Exception as e:
                         if "Flood control exceeded" in str(e):
-                            logger.warning("Flood control exceeded. Retrying in 90 seconds...")
-                            time.sleep(90)
+                            logger.warning("Flood control exceeded. Retrying in 120 seconds...")
+                            time.sleep(120)
                             continue
                         else:
                             logger.error(f"Failed to send news update to group chat {chat_id}: {title}. Error: {str(e)}")
