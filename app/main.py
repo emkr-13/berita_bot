@@ -27,7 +27,9 @@ RSS_FEED_URLS = ['https://www.suara.com/rss/news',
                  'https://www.sindonews.com/feed',
                  'https://wartakota.tribunnews.com/rss',
                  'https://www.jpnn.com/index.php?mib=rss',
-                 'https://www.beritasatu.com/sitemap_news.xml']
+                 'https://www.inews.id/feed/news',
+                 'https://www.tribunnews.com/rss',
+                 'https://nasional.sindonews.com/rss']
 
 CHECK_INTERVAL = int(config('TIME_CHECKS'))
 
