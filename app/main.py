@@ -14,11 +14,21 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 logger = logging.getLogger(__name__)
 
 API_KEY = config('API_KEY')
-RSS_FEED_URLS = ['https://www.suara.com/rss/news', 'https://www.vice.com/id/rss?locale=id_id', 'https://www.cnnindonesia.com/nasional/rss', 'https://www.cnbcindonesia.com/news/rss', 'https://www.republika.co.id/rss', 'https://lapi.kumparan.com/v2.0/rss/']
+RSS_FEED_URLS = ['https://www.suara.com/rss/news',
+                 'https://www.vice.com/id/rss?locale=id_id', 
+                 'https://www.cnnindonesia.com/nasional/rss', 
+                 'https://www.cnbcindonesia.com/news/rss', 
+                 'https://www.republika.co.id/rss',
+                 'https://lapi.kumparan.com/v2.0/rss/',
+                 'https://www.merdeka.com/feed',
+                 'https://www.viva.co.id/get/all',
+                 'https://www.sindonews.com/feed',
+                 'https://wartakota.tribunnews.com/rss',
+                 'https://www.jpnn.com/index.php?mib=rss']
 CHECK_INTERVAL = int(config('TIME_CHECKS'))
 
 bot = telegram.Bot(token=API_KEY)
-
+filter = ["ganjar", "anies", "prabowo"]
 
 def fetch_latest_news():
     all_news_entries = []
@@ -37,27 +47,33 @@ def fetch_latest_news():
 
 
 
+
+
 def send_news_updates(context: CallbackContext):
     chat_id = context.job.context
     news_entries = fetch_latest_news()
+    
     if news_entries:
         for latest_news in news_entries:
             title = latest_news.title
             link = latest_news.link
-            # pub_date = latest_news.pubDate
-            message = f'<b>{title}</b>\n<a href="{link}">Read more</a>'
-            if not is_news_exists(title):
-                try:
-                    context.bot.send_message(chat_id=chat_id, text=message, parse_mode=telegram.ParseMode.HTML)
-                    logger.info(f"Sent news update to group chat {chat_id}: {title}")
-                    insert_news_data(title, link)  # Menambahkan tanggal publikasi ke dalam database
-                except Exception as e:
-                    if "Flood control exceeded" in str(e):
-                        logger.warning("Flood control exceeded. Retrying in 60 seconds...")
-                        time.sleep(60)  
-                        continue  
-                    else:
-                        logger.error(f"Failed to send news update to group chat {chat_id}: {title}. Error: {str(e)}")
+
+            # Check if the title contains any of the keywords from the filter list
+            if any(keyword in title.lower() for keyword in filter):
+                message = f'<b>{title}</b>\n<a href="{link}">Read more</a>'
+                if not is_news_exists(title):
+                    try:
+                        context.bot.send_message(chat_id=chat_id, text=message, parse_mode=telegram.ParseMode.HTML)
+                        logger.info(f"Sent news update to group chat {chat_id}: {title}")
+                        insert_news_data(title, link)  # Menambahkan tanggal publikasi ke dalam database
+                    except Exception as e:
+                        if "Flood control exceeded" in str(e):
+                            logger.warning("Flood control exceeded. Retrying in 60 seconds...")
+                            time.sleep(60)
+                            continue
+                        else:
+                            logger.error(f"Failed to send news update to group chat {chat_id}: {title}. Error: {str(e)}")
+                
 
 def start(update: Update, context: CallbackContext):
     update.message.reply_text('Welcome! Use the /news command to get the latest news.')
