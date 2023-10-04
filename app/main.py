@@ -32,7 +32,10 @@ RSS_FEED_URLS = ['https://www.suara.com/rss/news',
                  'https://nasional.sindonews.com/rss',
                  'https://news.google.com/rss/search?q=ganjar%20presiden%20when%3A1h&hl=id&gl=ID&ceid=ID%3Aid',
                  'https://news.google.com/rss/search?q=ganjar%20pranowo%20presiden%20when%3A1h&hl=id&gl=ID&ceid=ID%3Aid',
-                 'https://news.google.com/rss/search?q=ganjar%20pranowo%20when%3A1h&hl=id&gl=ID&ceid=ID%3Aid']
+                 'https://news.google.com/rss/search?q=ganjar%20pranowo%20when%3A1h&hl=id&gl=ID&ceid=ID%3Aid',
+                 'https://news.google.com/rss/search?q=ganjar%20presiden%20when%3A1d&hl=id&gl=ID&ceid=ID%3Aid',
+                 'https://news.google.com/rss/search?q=ganjar%20pranowo%20presiden%20when%3A1d&hl=id&gl=ID&ceid=ID%3Aid',
+                 'https://news.google.com/rss/search?q=ganjar%20when%3A1d&hl=id&gl=ID&ceid=ID%3Aid']
 
 CHECK_INTERVAL = int(config('TIME_CHECKS'))
 
