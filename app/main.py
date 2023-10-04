@@ -29,13 +29,16 @@ RSS_FEED_URLS = ['https://www.suara.com/rss/news',
                  'https://www.jpnn.com/index.php?mib=rss',
                  'https://www.inews.id/feed/news',
                  'https://www.tribunnews.com/rss',
-                 'https://nasional.sindonews.com/rss']
+                 'https://nasional.sindonews.com/rss',
+                 'https://news.google.com/rss/search?q=%3Cganjar+presiden%3E&hl=id&gl=ID&ceid=ID:id',
+                 'https://news.google.com/rss/topics/CAAqJggKIiBDQkFTRWdvTUwyY3ZNVEppTURKamVHcHJFZ0pwWkNnQVAB?hl=id&gl=ID&ceid=ID%3Aid',
+                 'https://news.google.com/rss/search?q=%3Cganjar+pranowo+presiden%3E&hl=id&gl=ID&ceid=ID:id']
 
 CHECK_INTERVAL = int(config('TIME_CHECKS'))
 
 bot = telegram.Bot(token=API_KEY)
 # Tambah Keywords filter
-filter = ["ganjar", "anies", "prabowo"]
+filter = ["ganjar presiden", "ganjar pranowo presiden"]
 
 def fetch_latest_news():
     all_news_entries = []
@@ -75,8 +78,8 @@ def send_news_updates(context: CallbackContext):
                         insert_news_data(title, link)  # Menambahkan tanggal publikasi ke dalam database
                     except Exception as e:
                         if "Flood control exceeded" in str(e):
-                            logger.warning("Flood control exceeded. Retrying in 60 seconds...")
-                            time.sleep(60)
+                            logger.warning("Flood control exceeded. Retrying in 90 seconds...")
+                            time.sleep(90)
                             continue
                         else:
                             logger.error(f"Failed to send news update to group chat {chat_id}: {title}. Error: {str(e)}")
