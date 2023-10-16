@@ -42,7 +42,8 @@ CHECK_INTERVAL = int(config('TIME_CHECKS'))
 
 bot = telegram.Bot(token=API_KEY)
 # Tambah Keywords filter
-filter = ["ganjar presiden", "ganjar pranowo presiden"]
+# bebas berapa keyword
+filter = ["masukan keyword", "masukan keyword", "masukan keyword", "masukan keyword"]
 
 def fetch_latest_news():
     all_news_entries = []
