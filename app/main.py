@@ -7,7 +7,8 @@ from telegram import ChatAction
 import time
 import logging
 
-from cek_berita import insert_news_data,is_news_exists
+from cek_berita import *
+conn = get_db_connection()
 
 # Konfigurasi Logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
@@ -41,7 +42,8 @@ CHECK_INTERVAL = int(config('TIME_CHECKS'))
 
 bot = telegram.Bot(token=API_KEY)
 # Tambah Keywords filter
-filter = ["ganjar presiden", "ganjar pranowo presiden"]
+# bebas berapa keyword
+filter = ["masukan keyword", "masukan keyword", "masukan keyword", "masukan keyword"]
 
 def fetch_latest_news():
     all_news_entries = []
@@ -74,11 +76,11 @@ def send_news_updates(context: CallbackContext):
             # Check if the title contains any of the keywords from the filter list
             if any(keyword in title.lower() for keyword in filter):
                 message = f'<b>{title}</b>\n<a href="{link}">Read more</a>'
-                if not is_news_exists(title):
+                if not is_news_exists(title,conn):
                     try:
                         context.bot.send_message(chat_id=chat_id, text=message, parse_mode=telegram.ParseMode.HTML)
                         logger.info(f"Sent news update to group chat {chat_id}: {title}")
-                        insert_news_data(title, link)  # Menambahkan tanggal publikasi ke dalam database
+                        insert_news_data(title, link, conn)  # Menambahkan tanggal publikasi ke dalam database
                     except Exception as e:
                         if "Flood control exceeded" in str(e):
                             logger.warning("Flood control exceeded. Retrying in 120 seconds...")
